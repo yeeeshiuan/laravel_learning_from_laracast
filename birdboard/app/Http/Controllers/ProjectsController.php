@@ -22,5 +22,7 @@ class ProjectsController extends Controller
 		Project::create(request(['title', 'description']));
 
 		// redirect
+
+		return redirect('/projects');
     }
 }
