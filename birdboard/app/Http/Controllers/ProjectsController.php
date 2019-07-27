@@ -17,7 +17,7 @@ class ProjectsController extends Controller
     {
 		// volidate
 
-		request()->validate(['title' => 'required']);
+		request()->validate(['title' => 'required', 'description' => 'required']);
 
 		// persist
 
