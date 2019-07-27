@@ -27,5 +27,7 @@ class ProjectsTest extends TestCase
         $this->post('/projects', $attributes);
 
         $this->assertDatabaseHas('projects', $attributes);
+
+        $this->get('/projects');
     }
 }
