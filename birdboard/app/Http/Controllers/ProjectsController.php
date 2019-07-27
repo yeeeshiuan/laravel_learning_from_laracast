@@ -17,6 +17,8 @@ class ProjectsController extends Controller
     {
 		// volidate
 
+		request()->validate(['title' => 'required']);
+
 		// persist
 
 		Project::create(request(['title', 'description']));
