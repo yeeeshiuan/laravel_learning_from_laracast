@@ -62,15 +62,29 @@ class ProjectsTest extends TestCase
     public function a_user_can_view_their_project()
     {
 
-        $this->withoutExceptionHandling();
-
         $this->be(factory('App\User')->create());
+
+        $this->withoutExceptionHandling();
 
         $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
 
         $this->get($project->path())
                 ->assertSee($project->title)
                 ->assertSee($project->description);
+
+    }
+
+    /** @test **/
+    public function an_authenticated_user_cannot_view_the_projects_of_others()
+    {
+
+        $this->be(factory('App\User')->create());
+
+
+
+        $project = factory('App\Project')->create();
+
+        $this->get($project->path())->assertStatus(403);
 
     }
 
