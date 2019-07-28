@@ -13,10 +13,8 @@ class ProjectsController extends Controller
 		return view('projects.index', compact('projects'));
     }
 
-    public function show()
+    public function show(Project $project) // auto-inject
     {
-    	$project = Project::findOrFail(request('project'));
-
     	return view('projects.show', compact('project'));
     }
 
