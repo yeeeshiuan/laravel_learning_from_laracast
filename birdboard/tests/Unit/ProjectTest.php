@@ -10,13 +10,13 @@ class ProjectTest extends TestCase
 {
 
 	use RefreshDatabase;
-	
+
 	/** @test **/
     public function it_has_a_path()
     {
 
-        $projcet = factory('App\Project')->create();
+        $project = factory('App\Project')->create();
 
-        $this->assertEquals('/projects/' > $project-id, $project->path());
+        $this->assertEquals('/projects/' . $project->id, $project->path());
     }
 }
