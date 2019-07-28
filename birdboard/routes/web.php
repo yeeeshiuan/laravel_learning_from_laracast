@@ -23,10 +23,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::post('/projects', 'ProjectsController@store');
 
+
+	Route::get('/home', 'HomeController@index')->name('home');
 });
-
-
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
