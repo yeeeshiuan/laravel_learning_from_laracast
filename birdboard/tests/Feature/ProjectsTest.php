@@ -62,7 +62,7 @@ class ProjectsTest extends TestCase
 
         //$this->withoutExceptionHandling();
 
-        $attributes = factory('App\Project')->raw(;
+        $attributes = factory('App\Project')->raw();
 
         $this->post('/projects', $attributes)->assertRedirect('login');
     }
