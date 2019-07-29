@@ -22,7 +22,7 @@ class ProjectTasksTest extends TestCase
 
         $project = factory(Project::class)->create(['owner_id' => auth()->id()]);
 
-        $this->post($project->path() . '/tasks', ['body' => 'Test tasks']);
+        $this->post($project->path() . '/tasks', ['body' => 'Test task']);
 
         $this->get($project->path())
                 ->assertSee('Test task');
