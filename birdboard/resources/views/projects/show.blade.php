@@ -6,16 +6,20 @@
 	<div>{{ $project->description }}</div>
 	<a href="/projects">Go back</a>
 
-	@forelse ($project->tasks as $task)
+	@foreach ($project->tasks as $task)
 
 		<li>
 			<p>{{ $task->body }}</p>
 		</li>
 
-	@empty
+	@endforeach
 
-		<li>No task yet.</li>
+	<form action="{{ $project->path() . '/tasks' }}" method="POST">
+		
+		@csrf
 
-	@endforelse
+		<input class="input" name="body" type="text" placeholder="Add new task...">
+
+	</form>
 
 @endsection
