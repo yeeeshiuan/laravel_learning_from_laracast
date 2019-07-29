@@ -1,13 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
+@extends ('layouts.app')
+
+@section('cdn')
+
 	<!-- Latest CSS files for bulma and font-awesome -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
-</head>
-<body>
-	<form method="POST" action="/projects" class="container" style="padding-top: 40px">
+
+@endsection
+
+@section('content')
+
+	<form method="POST" action="/projects">
 
 		@csrf
 
@@ -32,9 +35,10 @@
 		<div class="field">
 			<div class="control">
 			  <button class="button is-primary" type="submit">Create Project</button>
+			  <a href="/projects">Cancel</a>
 			</div>
 		</div>
 
 	</form>
-</body>
-</html>
+
+@endsection

@@ -1,12 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	<h1>Birdboard</h1>
+@extends ('layouts.app')
+
+@section('cdn')
+
+	<!-- Latest CSS files for bulma and font-awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+
+@endsection
+
+@section('content')
+
+	<div class="column ">
+        <a href="/projects/create/">New Project</a>
+	</div>
 
 	<ul>
+
 		@forelse ($projects as $project)
 
 			<li>
@@ -19,5 +28,5 @@
 
 		@endforelse
 	</ul>
-</body>
-</html>
+
+@endsection
