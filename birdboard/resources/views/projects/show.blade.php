@@ -8,9 +8,19 @@
 
 	@foreach ($project->tasks as $task)
 
-		<li>
-			<p>{{ $task->body }}</p>
-		</li>
+		<form method="POST" action="{{ $project->path() . '/tasks/' . $task->id }}">
+
+			@method('PATCH')
+
+			@csrf
+
+			<input value="{{ $task->body }}" name="body" />
+
+			<input type="checkbox" 
+					name="completed" 
+					onChange="this.form.submit()" {{ $task->completed ? 'checked' : '' }} />
+
+		</form>
 
 	@endforeach
 
