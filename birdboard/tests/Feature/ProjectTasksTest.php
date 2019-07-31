@@ -35,11 +35,11 @@ class ProjectTasksTest extends TestCase
 
         $this->signIn();
 
-        $project = factory('App\Project')->create();
+        $project = app(ProjectFactory::class)
+                    ->withTasks(1)
+                    ->create();
 
-        $task = $project->addTask('test task');
-
-        $this->patch($task->path(), ['body' => 'changed'])
+        $this->patch($project->tasks[0]->path(), ['body' => 'changed'])
                 ->assertStatus(403);
 
         $this->assertDatabaseMissing('tasks', ['body' => 'changed']);
@@ -51,11 +51,10 @@ class ProjectTasksTest extends TestCase
     public function a_project_can_have_tasks()
     {
 
-        $this->signIn();
-
-        $project = auth()->user()->projects()->create(
-            factory(Project::class)->raw()
-        );
+        $project = app(ProjectFactory::class)
+                    ->ownedBy($this->signIn())
+                    ->withTasks(1)
+                    ->create();
 
         $this->post($project->path() . '/tasks', ['body' => 'Test task']);
 
@@ -73,7 +72,7 @@ class ProjectTasksTest extends TestCase
                     ->withTasks(1)
                     ->create();
 
-        $this->patch($project->tasks->first()->path(), [
+        $this->patch($project->tasks[0]->path(), [
 
             'body' => 'changed',
 
@@ -96,11 +95,9 @@ class ProjectTasksTest extends TestCase
     public function a_task_requires_a_body()
     {
 
-        $this->signIn();
-
-        $project = auth()->user()->projects()->create(
-            factory(Project::class)->raw()
-        );
+        $project = app(ProjectFactory::class)
+                    ->ownedBy($this->signIn())
+                    ->create();
 
         $attributes = factory('App\Task')->raw(['body' => '']);
 

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Tests\Setup\ProjectFactory;
 use App\Project;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,8 +30,6 @@ class ManageProjectsTest extends TestCase
     /** @test **/
     public function a_user_can_create_a_project()
     {
-
-        $this->withoutExceptionHandling();
 
         $this->signIn();
 
@@ -61,19 +60,17 @@ class ManageProjectsTest extends TestCase
     public function a_user_can_update_a_project()
     {
 
-        $this->signIn();
+        $project = app(ProjectFactory::class)
+                    ->ownedBy($this->signIn())
+                    ->withTasks(1)
+                    ->create();
 
-        $this->withoutExceptionHandling();
+        $attributes = ['notes' => 'Changed'];
 
-        $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
+        $this->patch($project->path(), $attributes)
+                ->assertRedirect($project->path());
 
-        $this->patch($project->path(), [
-
-            'notes' => 'Changed'
-
-        ])->assertRedirect($project->path());
-
-        $this->assertDatabaseHas('projects', ['notes' => 'Changed']);
+        $this->assertDatabaseHas('projects', $attributes);
 
     }
 
@@ -81,11 +78,9 @@ class ManageProjectsTest extends TestCase
     public function a_user_can_view_their_project()
     {
 
-        $this->signIn();
-
-        $this->withoutExceptionHandling();
-
-        $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
+        $project = app(ProjectFactory::class)
+                    ->ownedBy($this->signIn())
+                    ->create();
 
         $this->get($project->path())
                 ->assertSee($project->title)
