@@ -38,7 +38,7 @@
 
 		@method('PATCH')
 
-		<textarea>{{ $project->notes }}</textarea>
+		<textarea name="notes">{{ $project->notes }}</textarea>
 
 		<button type="submit">Save</button>
 
