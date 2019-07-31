@@ -32,4 +32,16 @@
 
 	</form>
 
+	<form action="{{ $project->path() }}" method="POST">
+		
+		@csrf
+
+		@method('PATCH')
+
+		<textarea>{{ $project->notes }}</textarea>
+
+		<button type="submit">Save</button>
+
+	</form>
+
 @endsection
