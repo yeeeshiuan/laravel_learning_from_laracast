@@ -15,20 +15,15 @@ class ProjectsController extends Controller
 
     public function show(Project $project) // auto-inject
     {
-        if ( auth()->user()->isNot($project->owner) )
-        {
-            abort(403);
-        }
+        $this->authorize('update', $project);
 
     	return view('projects.show', compact('project'));
     }
 
     public function update(Project $project) // auto-inject
     {
-        if ( auth()->user()->isNot($project->owner) )
-        {
-            abort(403);
-        }
+
+        $this->authorize('update', $project);
 
         $project->update([
 
