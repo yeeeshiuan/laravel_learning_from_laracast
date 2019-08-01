@@ -64,6 +64,8 @@ class ManageProjectsTest extends TestCase
     public function a_user_can_update_a_project()
     {
 
+        $this->withoutExceptionHandling();
+
         $project = app(ProjectFactory::class)
                     ->ownedBy($this->signIn())
                     ->withTasks(1)
@@ -80,6 +82,24 @@ class ManageProjectsTest extends TestCase
 
         $this->assertDatabaseHas('projects', $attributes);
 
+    }
+
+    /** @test **/
+    public function a_user_can_update_a_projects_general_notes()
+    {
+        $project = app(ProjectFactory::class)
+                    ->ownedBy($this->signIn())
+                    ->withTasks(1)
+                    ->create();
+
+        $attributes = ['notes' => 'Changed'];
+
+        $this->patch($project->path(), $attributes)
+                ->assertRedirect($project->path());
+
+        $this->get($project->path())->assertStatus(200);
+
+        $this->assertDatabaseHas('projects', $attributes);
     }
 
     /** @test **/
