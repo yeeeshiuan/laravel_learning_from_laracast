@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Http\Requests\UpdateProjectRequest;
 
 class ProjectsController extends Controller
 {
@@ -20,14 +21,10 @@ class ProjectsController extends Controller
     	return view('projects.show', compact('project'));
     }
 
-    public function update(Project $project) // auto-inject
+    public function update(UpdateProjectRequest $request, Project $project) // auto-inject
     {
 
-        $this->authorize('update', $project);
-
-        $attributes = $this->validateForm();
-
-        $project->update($attributes);
+        $project->update($request->validated());
 
         return redirect($project->path());
     }
@@ -57,7 +54,7 @@ class ProjectsController extends Controller
         return request()->validate([
                 'title' => 'sometimes|required', 
                 'description' => 'sometimes|required',
-                'notes' => 'min:3'
+                'notes' => 'nullable'
             ]);
     }
 }
