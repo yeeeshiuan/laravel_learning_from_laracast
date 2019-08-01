@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Project;
+use App\Activity;
 
 class ProjectObserver
 {
@@ -14,7 +15,12 @@ class ProjectObserver
      */
     public function created(Project $project)
     {
-        //
+        Activity::create([
+
+            'project_id' => $project->id,
+            'description' => 'created'
+
+        ]);
     }
 
     /**
@@ -25,7 +31,12 @@ class ProjectObserver
      */
     public function updated(Project $project)
     {
-        //
+        Activity::create([
+
+            'project_id' => $project->id,
+            'description' => 'updated'
+
+        ]);
     }
 
     /**
