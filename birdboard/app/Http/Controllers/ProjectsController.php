@@ -21,10 +21,10 @@ class ProjectsController extends Controller
     	return view('projects.show', compact('project'));
     }
 
-    public function update(UpdateProjectRequest $request, Project $project) // auto-inject
+    public function update(UpdateProjectRequest $form, Project $project) // auto-inject
     {
 
-        $project->update($request->validated());
+        $project->update($form->validated());
 
         return redirect($project->path());
     }
