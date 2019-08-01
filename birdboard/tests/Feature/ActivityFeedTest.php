@@ -20,6 +20,8 @@ class ActivityFeedTest extends TestCase
 
         $this->assertCount(1, $project->activity);
 
+        $this->assertEquals('created', $project->activity[0]->description);
+
     }
 
 
