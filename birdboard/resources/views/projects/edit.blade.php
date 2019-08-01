@@ -10,16 +10,15 @@
 
 @section('content')
 
-	<h1 class="heading is-1">Create New Project</h1>
+	<h1 class="heading is-1">Edit Your Project</h1>
 
-	<form method="POST" action="/projects">
+	<form method="POST" action="{{ $project->path() }}">
 
 		@csrf
 
-		@include('projects.form', [
-			'project' => new App\Project,
-			'formSubmitText' => 'Create'
-		])
+		@method('PATCH')
+
+		@include('projects.form', ['formSubmitText' => 'Update'])
 
 	</form>
 

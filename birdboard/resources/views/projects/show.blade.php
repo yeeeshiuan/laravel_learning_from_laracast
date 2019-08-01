@@ -32,6 +32,8 @@
 
 	</form>
 
+	<a href="{{ $project->path() . '/edit' }}">Edit Project</a>
+
 	<form action="{{ $project->path() }}" method="POST">
 		
 		@csrf
