@@ -13,7 +13,7 @@ class ActivityFeedTest extends TestCase
     use RefreshDatabase;
 
     /** @test **/
-    function creating_a_project_generates_activity()
+    function creating_a_project_records_activity()
     {
 
         $project = ProjectFactory::create();
@@ -25,7 +25,7 @@ class ActivityFeedTest extends TestCase
     }
 
     /** @test **/
-    function updating_a_project_generates_activity()
+    function updating_a_project_records_activity()
     {
 
         $project = ProjectFactory::create();
