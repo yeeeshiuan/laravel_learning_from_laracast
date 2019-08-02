@@ -22,13 +22,13 @@ class task extends Model
 
         static::created(function ($task){
 
-            $task->project->recordActivity('created_task');
+            $task->recordActivity('created_task');
 
         });
 
         static::deleted(function ($task){
 
-            $task->project->recordActivity('deleted_task');
+            $task->recordActivity('deleted_task');
 
         });
 
@@ -39,7 +39,7 @@ class task extends Model
 
         $this->update(['completed' => true]);
 
-        $this->project->recordActivity('completed_task');
+        $this->recordActivity('completed_task');
 
     }
 
@@ -48,12 +48,11 @@ class task extends Model
 
         $this->update(['completed' => false]);
 
-        $this->project->recordActivity('incompleted_task');
+        $this->recordActivity('incompleted_task');
 
     }
 
     
-
     public function project()
     {
     	return $this->belongsTo(Project::class);
@@ -62,5 +61,23 @@ class task extends Model
     public function path()
     {
     	return "/projects/{$this->project->id}/tasks/{$this->id}";
+    }
+
+    public function activity()
+    {
+        return $this->morphMany(Activity::class, 'subject')->latest();
+    }
+
+    public function recordActivity($description)
+    {
+
+        $this->activity()->create([
+
+            'project_id' => $this->project_id,
+
+            'description' => $description
+
+        ]);
+
     }
 }
