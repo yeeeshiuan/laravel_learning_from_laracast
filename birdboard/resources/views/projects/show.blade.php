@@ -46,38 +46,6 @@
 
 	</form>
 
-	<div>
-		
-		<ul>
-
-			@foreach($project->activity as $activity)
-
-				<li>
-
-					@if ($activity->description === "created")
-
-						You created the project
-
-					@elseif ($activity->description === "created_task")
-
-						You created a task
-
-					@elseif ($activity->description === "completed_task")
-
-						You completed a task
-
-					@else
-
-						{{ $activity->description }}
-
-					@endif
-
-				</li>
-
-			@endforeach
-
-		</ul>
-
-	</div>
+	@include('projects.activity.card')
 
 @endsection
