@@ -7,13 +7,13 @@ use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ActivityFeedTest extends TestCase
+class TriggerActivityTest extends TestCase
 {
     
     use RefreshDatabase;
 
     /** @test **/
-    function creating_a_project_records_activity()
+    function creating_a_project()
     {
 
         $project = ProjectFactory::create();
@@ -25,7 +25,7 @@ class ActivityFeedTest extends TestCase
     }
 
     /** @test **/
-    function updating_a_project_records_activity()
+    function updating_a_project()
     {
 
         $project = ProjectFactory::create();
@@ -41,7 +41,7 @@ class ActivityFeedTest extends TestCase
     }
 
     /** @test **/
-    function creating_a_new_task_records_project_activity()
+    function creating_a_new_task()
     {
 
         $project = ProjectFactory::create();
@@ -57,7 +57,7 @@ class ActivityFeedTest extends TestCase
     }
 
     /** @test **/
-    function completing_a_task_records_project_activity()
+    function completing_a_task()
     {
         $project = ProjectFactory::withTasks(1)->create();
 
@@ -78,5 +78,40 @@ class ActivityFeedTest extends TestCase
         $this->assertEquals('completed_task', $project->activity[2]->description);
     }
 
+    /** @test **/
+    function incompleting_a_task()
+    {
+        $project = ProjectFactory::withTasks(1)->create();
+
+        $this->actingAs($project->owner)
+                ->patch($project->tasks[0]->path(), [
+
+                    'body' => 'foobar', 
+
+                    'completed' => true
+                ]);
+
+        $this->assertCount(3, $project->activity);
+
+        $this->actingAs($project->owner)
+                ->patch($project->tasks[0]->path(), [
+
+                    'body' => 'foobar', 
+
+                    'completed' => false
+                ]);
+
+        $project = $project->fresh();
+
+        $this->assertCount(4, $project->activity);
+
+        $this->assertEquals('created', $project->activity[0]->description);
+
+        $this->assertEquals('created_task', $project->activity[1]->description);
+
+        $this->assertEquals('completed_task', $project->activity[2]->description);
+
+        $this->assertEquals('incompleted_task', $project->activity[3]->description);
+    }
 
 }
