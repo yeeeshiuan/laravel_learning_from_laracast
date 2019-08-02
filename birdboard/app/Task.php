@@ -26,6 +26,12 @@ class task extends Model
 
         });
 
+        static::deleted(function ($task){
+
+            $task->project->recordActivity('deleted_task');
+
+        });
+
     }
 
     public function complete()
@@ -41,6 +47,8 @@ class task extends Model
     {
 
         $this->update(['completed' => false]);
+
+        $this->project->recordActivity('incompleted_task');
 
     }
 
