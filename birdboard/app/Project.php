@@ -4,11 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Project extends Model
 {
+
+    use RecordsActivity;
+
     protected $guarded = [];
 
-    public $old = [];
 
     public function path()
     {
@@ -35,32 +38,4 @@ class Project extends Model
         return $this->hasMany(Activity::class)->latest();
     }
 
-    public function recordActivity($description)
-    {
-
-        $this->activity()->create([
-
-            'description' => $description,
-
-            'changes' => $this->activityChanged($description)
-
-        ]);
-
-    }
-
-    protected function activityChanged($description)
-    {
-        if ($description == 'updated')
-        {
-            return [
-
-                'before' => array_except(
-                    array_diff($this->old, $this->getAttributes()), 'updated_at'
-                ),
-
-                'after' => array_except($this->getChanges(), 'updated_at')
-
-            ];
-        }
-    }
 }
