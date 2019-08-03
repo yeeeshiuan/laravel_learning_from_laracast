@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::post('/projects', 'ProjectsController@store');
 
+	Route::delete('/projects/{project}', 'ProjectsController@destroy');
+
 
 	Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
 
