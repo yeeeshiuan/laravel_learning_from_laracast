@@ -40,6 +40,8 @@ trait RecordsActivity
 
         $this->activity()->create([
 
+            'user_id' => ($this->project ?? $this)->owner->id,
+
             'description' => $description,
 
             'changes' => $this->activityChanged(),
