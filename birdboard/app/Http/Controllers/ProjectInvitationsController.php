@@ -5,24 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Project;
+use App\Http\Requests\ProjectInvitationRequest;
 
 class ProjectInvitationsController extends Controller
 {
     
-	public function store(Project $project)
+	public function store(Project $project, ProjectInvitationRequest $request)
 	{
-
-		$this->authorize('update', $project);
-
-		request()->validate([
-
-			'email' => [ 'required', 'exists:users,email']
-
-		], [
-
-			'email.exists' => 'The user you are inviting must have a Birdboard account.'
-
-		]);
 
 		$user = User::whereEmail(request('email'))->first();
 
