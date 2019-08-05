@@ -16,18 +16,22 @@
 
 	</ul>
 
-	<footer>
-		
-		<form method="POST" action="{{ $project->path() }}">
+	@can ('manage', $project)
 
-			@method('DELETE')
-
-			@csrf
+		<footer>
 			
-			<button type="submit">Delete</button>
+			<form method="POST" action="{{ $project->path() }}">
 
-		</form>
+				@method('DELETE')
 
-	</footer>
+				@csrf
+				
+				<button type="submit">Delete</button>
+
+			</form>
+
+		</footer>
+
+	@endcan
 
 </div>
