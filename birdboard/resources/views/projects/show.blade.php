@@ -50,16 +50,10 @@
 
 	@include('errors')
 
-	<form method="POST" action="{{ $project->path() . '/invitations' }}">
+	@if (auth()->user()->is($project->owner))
 
-		@csrf
-		
-		<input type="email" name="email" placeholder="Email address" />
+		@include('projects.invite')
 
-		<button type="submit">Invite</button>
-
-	</form>
-
-	@include('errors', ['bag' => 'invitations'])
+	@endif
 
 @endsection

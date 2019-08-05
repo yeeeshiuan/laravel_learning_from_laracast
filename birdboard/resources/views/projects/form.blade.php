@@ -23,5 +23,3 @@
 </div>
 
 @include('errors')
-
-@endif
