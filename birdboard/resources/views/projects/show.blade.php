@@ -48,6 +48,8 @@
 
 	@include('projects.activity.card')
 
+	@include('errors')
+
 	<form method="POST" action="{{ $project->path() . '/invitations' }}">
 
 		@csrf
@@ -58,6 +60,6 @@
 
 	</form>
 
-	@include('errors')
+	@include('errors', ['bag' => 'invitations'])
 
 @endsection
