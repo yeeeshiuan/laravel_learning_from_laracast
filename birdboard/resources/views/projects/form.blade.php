@@ -22,14 +22,6 @@
 	</div>
 </div>
 
-@if ($errors->any())
-<div class="field">
+@include('errors')
 
-	@foreach ($errors->all() as $error)
-
-		<li>{{ $error }}</li>
-
-	@endforeach
-
-</div>
 @endif
